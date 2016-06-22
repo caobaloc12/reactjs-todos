@@ -1,7 +1,7 @@
 var TodoApp = React.createClass({
 
 	getInitialState: function () {
-		return {items: [], completeds: []};
+		return {items: []};
 	},
 
 	updateItems: function (newItem) {
@@ -10,15 +10,16 @@ var TodoApp = React.createClass({
 	},
 
 	updateCompletedItem: function (completedItem) {
-		console.log(completedItem);
 		
 		this.state.items.map(function (item, index) {
 			if (item.title === completedItem.title) {				
 				item.completed = completedItem.completed;
 			}
 		});
-
-		this.setState({items: this.state.items});
+		var sortByCompleted = _.sortBy(this.state.items, function (o) {
+			return o.completed;
+		});		
+		this.setState({items: sortByCompleted});
 	},
 
 	render: function () {
